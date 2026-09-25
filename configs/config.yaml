@@ -1,0 +1,181 @@
+# HemaHier: single config for the MLLv1 public recipe.
+# Ontology / distances / chains are part of the method; do not edit them
+# if you want numbers comparable to the paper.
+
+paths:
+  runs_dir: runs
+  splits_dir: splits
+  labels_file: configs/labels_v2.json
+
+# --- taxonomy (shared hematopoietic ontology) --------------------------------
+harmonization:
+  canonical_aliases:
+    myelocyte_neutrophil: neutrophil_myelocyte
+    metamyelocyte: neutrophil_metamyelocyte
+    myelocyte_eosinophil: eosinophil_myelocyte
+    abnormal_eosinophil: eosinophil_atypical
+    basophil_immature: immature_basophil
+    eosinophil_immature: immature_eosinophil
+
+progenitor:
+  root: blast_unspecified
+  granulocytic_blast: myeloblast
+  connects_to:
+    - lymphocyte
+    - megakaryoblast
+    - monoblast
+    - proerythroblast
+    - mast_cell
+    - myeloblast
+
+artifacts:
+  training_excluded_canonical:
+    - reticular_stromal_cell
+    - free_granules
+  artifact_canonical:
+    - unlabeled
+    - cell_artifact
+    - smudge_cell
+    - nuclear_debris
+    - apoptotic_cell
+    - mitotic_cell
+
+unhealthy:
+  dysplastic:
+    promyelocyte_atypical:
+      lineage: granulocytic
+      branch: neutrophil
+      maturity_variant_of: promyelocyte
+    megakaryocyte_dysplastic:
+      lineage: megakaryocytic
+      anchor: megakaryocyte
+    micromegakaryocyte:
+      lineage: megakaryocytic
+      anchor: megakaryocyte
+    eosinophil_atypical:
+      lineage: granulocytic
+      branch: eosinophil
+    pseudo_pelger_pattern:
+      lineage: granulocytic
+      branch: neutrophil
+    basophil_atypical:
+      lineage: granulocytic
+      branch: basophil
+    erythroblast_dysplastic:
+      lineage: erythroid
+      anchor: orthochromatic_erythroblast
+  pathologic: {}
+
+eval_distance:
+  cross_lineage: 1.0
+  off_chain_to_healthy: 0.25
+  off_chain_intra: 0.1
+  max_same_chain: 0.85
+  same_lineage_branch: 0.75
+
+branches:
+  neutrophil:
+    parent_lineage: granulocytic
+    chain: [myeloblast, promyelocyte, myelocyte_neutrophil, metamyelocyte, neutrophil_band, segmented_neutrophil]
+  eosinophil:
+    parent_lineage: granulocytic
+    chain: [promyelocyte, eosinophil_immature, eosinophil]
+  basophil:
+    parent_lineage: granulocytic
+    chain: [promyelocyte, basophil_immature, basophil]
+  erythroid:
+    parent_lineage: erythroid
+    chain: [proerythroblast, basophilic_erythroblast, polychromatic_erythroblast, orthochromatic_erythroblast]
+  monocytic:
+    parent_lineage: monocytic
+    chain: [promonocyte, monocyte, macrophage]
+  lymphoid:
+    parent_lineage: lymphoid
+    chain: [lymphocyte, plasma_cell]
+  megakaryocytic:
+    parent_lineage: megakaryocytic
+    chain: [megakaryoblast, megakaryocyte]
+
+datasets:
+  mllv1:
+    dataset: mllv1
+    description: MLL v1 bone-marrow corpus (Matek et al. 2021)
+    root_env: MLLV1_ROOT
+    img_size: 224
+    batch_size: 64
+    num_workers: 8
+    cv:
+      n_folds: 5
+      seed: 2026
+      min_samples_per_class: 1
+      biologic_filter: all_mapped
+      exclude_artifacts: false
+      use_source_labels: true
+
+# --- training defaults (MLLv1 recipe; CLI can still override) ----------------
+model:
+  backbone: dinobloom_s
+  fine_dim: 256
+  coarse_dim: 512
+  lora_rank: 0
+  lora_alpha: 128.0
+  freeze_backbone: true
+  label_smoothing: 0.05
+
+training:
+  epochs: 10
+  warmup_epochs: 1
+  batch_size: 64
+  lr: 0.0003
+  weight_decay: 0.0001
+  lr_schedule: cosine_epoch
+  loss_schedule: finalshot
+  num_workers: 8
+  img_size: 224
+  seed: 2026
+  maturity_target_mode: hard
+  maturity_soft_sigma_stages: 1.0
+
+# Paper methods on MLLv1. HemaHier is the published cascade+probe head;
+# HemaHier_LoRA is the same head with auxiliary fine CE raised to 1.0.
+experiments:
+  Flat:
+    flat_only: true
+    linear_probe: true
+    linear_probe_layers: 4
+    description: Frozen DinoBloom-S linear probe (4 CLS + mean patch)
+  HemaHier:
+    use_hemahier: true
+    hemahier_version: cascade
+    feature_mode: probe
+    feature_layers: 4
+    joint_posterior: true
+    default_decode_mode: joint
+    pooling: gap
+    use_bayes_eval: false
+    lambda_lineage: 0.05
+    lambda_maturity: 0.005
+    lambda_rank: 0.003
+    lambda_raw_fine_aux: 0.2
+    chain_cond_dim: 32
+    maturity_hidden_dim: 64
+    maturity_activation: identity
+    maturity_eps: 0.05
+    rank_margin: 0.05
+    rank_temperature: 1.0
+    training_warmup_iters: 500
+    use_maturity: true
+    use_ranking: true
+    description: HemaHier cascade+probe, frozen backbone
+  HemaHier_LoRA:
+    same_as: HemaHier
+    lambda_raw_fine_aux: 1.0
+    description: HemaHier cascade+probe, LoRA-adapted backbone
+  # Ids the released MLLv1 checkpoints were trained under. They resolve to the
+  # two entries above, so a downloaded run directory loads unmodified.
+  HemaHier_Cascade_Probe:
+    same_as: HemaHier
+    description: HemaHier cascade+probe, frozen backbone (legacy id)
+  HemaHier_Cascade_Probe_RA10:
+    same_as: HemaHier_LoRA
+    description: HemaHier cascade+probe, LoRA-adapted backbone (legacy id)

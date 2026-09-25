@@ -1,0 +1,15 @@
+{
+  "dataset": "mllv1",
+  "root_env": "MLLV1_ROOT",
+  "n_folds": 5,
+  "seed": 2026,
+  "min_samples_per_class": 1,
+  "biologic_filter": "all_mapped",
+  "exclude_artifacts": false,
+  "img_size": 224,
+  "batch_size": 64,
+  "num_workers": 8,
+  "description": "MLL v1 bone-marrow corpus \u2014 single-dataset 5-fold CV",
+  "use_source_labels": true,
+  "generated_at": "2026-07-03T14:34:47.343866+00:00"
+}

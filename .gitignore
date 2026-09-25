@@ -1,0 +1,168 @@
+# =============================================================================
+# HemaHier: git ignore
+# Tracked: source, configs, ontology, split checksums.
+# Not tracked: datasets, checkpoints, generated CV folds, local env.
+# =============================================================================
+
+# --- Python ------------------------------------------------------------------
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+!scripts/lib/
+!scripts/lib/**
+lib64/
+parts/
+sdist/
+var/
+wheels/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Virtual environments
+.env
+.venv
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+.python-version
+
+# Jupyter / IPython
+.ipynb_checkpoints/
+profile_default/
+ipython_config.py
+
+# Test / coverage / type checkers
+htmlcov/
+.tox/
+.nox/
+.coverage
+.coverage.*
+.cache/
+nosetests.xml
+coverage.xml
+*.cover
+*.py,cover
+.hypothesis/
+.pytest_cache/
+cover/
+.mypy_cache/
+.dmypy.json
+dmypy.json
+.pyre/
+.pytype/
+.ruff_cache/
+
+# --- PyTorch / deep learning -------------------------------------------------
+runs/
+results/
+_feature_cache/
+**/_feature_cache/
+outputs/
+output/
+checkpoints/
+ckpts/
+logs/
+log/
+tensorboard/
+tb_logs/
+events.out.tfevents.*
+
+*.pt
+*.pth
+*.ckpt
+*.safetensors
+*.onnx
+*.pb
+*.h5
+*.hdf5
+*.pkl
+*.pickle
+*.joblib
+*.npz
+*.npy
+
+.cache/
+hf_cache/
+weights/
+wandb/
+mlruns/
+neptune/
+
+# --- Datasets ----------------------------------------------------------------
+datasets/
+dataset/
+raw/
+external/
+
+# --- LaTeX build junk (keep sources + the camera-ready PDF) ------------------
+*.aux
+*.lof
+*.lot
+*.fls
+*.fdb_latexmk
+*.synctex.gz
+*.synctex(busy)
+*.out
+*.toc
+*.nav
+*.snm
+*.vrb
+*.bcf
+*.run.xml
+*.xdv
+*-converted-to.pdf
+*.log
+*.blg
+*.bbl
+
+# --- OS / IDE ----------------------------------------------------------------
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+Desktop.ini
+
+.idea/
+*.iml
+.vscode/
+!.vscode/extensions.json
+!.vscode/settings.json.example
+*.swp
+*.swo
+*~
+.project
+.pydevproject
+.settings/
+
+# --- Local secrets / generated splits ----------------------------------------
+secrets/
+*.local
+.env.local
+.env.*.local
+credentials.json
+*.pem
+scripts/local.env
+
+# Fold JSON / manifests are regenerated from the public dataset (340 MB for
+# MLLv1). Only CHECKSUMS.json, summary.json and config.json are tracked.
+splits/*/fold_*.json
+splits/*/manifest.json

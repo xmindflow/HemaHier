@@ -1,0 +1,81 @@
+{
+  "dataset": "mllv1",
+  "seed": 2026,
+  "n_samples": 171374,
+  "n_classes": 21,
+  "class_list": [
+    "ABE",
+    "ART",
+    "BAS",
+    "BLA",
+    "EBO",
+    "EOS",
+    "FGC",
+    "HAC",
+    "KSC",
+    "LYI",
+    "LYT",
+    "MMZ",
+    "MON",
+    "MYB",
+    "NGB",
+    "NGS",
+    "NIF",
+    "OTH",
+    "PEB",
+    "PLM",
+    "PMO"
+  ],
+  "folds": {
+    "fold_0": {
+      "train": {
+        "n": 137093,
+        "sha256": "d29a0ac4785fe96e3b240aa05650ba526a40f044d0aef9ed1b7f5dfeef9f0e94"
+      },
+      "val": {
+        "n": 34281,
+        "sha256": "9f681e4c7e420b66060643861177cf4969bcf655099ce268108cc91276e9618f"
+      }
+    },
+    "fold_1": {
+      "train": {
+        "n": 137094,
+        "sha256": "d35a975bfc84b6b17b8dbfe67812b240cd2e76a348a35ae7a156e7cf96043165"
+      },
+      "val": {
+        "n": 34280,
+        "sha256": "fe66ecd9c7be0ecde48e1a75b03d8a27670838c2d0305b4e71351871d716bfb8"
+      }
+    },
+    "fold_2": {
+      "train": {
+        "n": 137098,
+        "sha256": "c9a9442be367ddd3e3bfa22e122e4a5ee60e692e5fbf482ae5a253b1cb2c2042"
+      },
+      "val": {
+        "n": 34276,
+        "sha256": "c2ad65d3e93602d319cf91d1b500bd86f8bdc996b1eacb34efd75e727af11963"
+      }
+    },
+    "fold_3": {
+      "train": {
+        "n": 137103,
+        "sha256": "25d1d4af0d3c0780e34a21ccfaef6a62664668d914de3a59b9b7b38060f295a1"
+      },
+      "val": {
+        "n": 34271,
+        "sha256": "4e480be52b308d0a008b7a1b0e246298294f8742b11dc5ed5aa5f64b5837f05b"
+      }
+    },
+    "fold_4": {
+      "train": {
+        "n": 137108,
+        "sha256": "501158b1392bb85c42c685e7d7cdf5c5a4d88307f39f500aa6c291b19e72167f"
+      },
+      "val": {
+        "n": 34266,
+        "sha256": "901872b06047a81bd9393ece3cee4e584045f8ab418786a9f790699e1c350723"
+      }
+    }
+  }
+}

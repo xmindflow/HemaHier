@@ -1,0 +1,75 @@
+{
+  "dataset": "mllv1",
+  "n_folds": 5,
+  "seed": 2026,
+  "n_samples": 171374,
+  "n_classes": 21,
+  "class_list": [
+    "ABE",
+    "ART",
+    "BAS",
+    "BLA",
+    "EBO",
+    "EOS",
+    "FGC",
+    "HAC",
+    "KSC",
+    "LYI",
+    "LYT",
+    "MMZ",
+    "MON",
+    "MYB",
+    "NGB",
+    "NGS",
+    "NIF",
+    "OTH",
+    "PEB",
+    "PLM",
+    "PMO"
+  ],
+  "class_order": "source_labels",
+  "n_output_classes": 21,
+  "dropped_classes": {},
+  "folds": [
+    {
+      "fold": 0,
+      "train_n": 137093,
+      "val_n": 34281,
+      "train_classes": 21,
+      "val_classes": 21,
+      "mean_val_fraction": 0.2038
+    },
+    {
+      "fold": 1,
+      "train_n": 137094,
+      "val_n": 34280,
+      "train_classes": 21,
+      "val_classes": 21,
+      "mean_val_fraction": 0.2037
+    },
+    {
+      "fold": 2,
+      "train_n": 137098,
+      "val_n": 34276,
+      "train_classes": 21,
+      "val_classes": 21,
+      "mean_val_fraction": 0.2016
+    },
+    {
+      "fold": 3,
+      "train_n": 137103,
+      "val_n": 34271,
+      "train_classes": 21,
+      "val_classes": 21,
+      "mean_val_fraction": 0.1956
+    },
+    {
+      "fold": 4,
+      "train_n": 137108,
+      "val_n": 34266,
+      "train_classes": 21,
+      "val_classes": 21,
+      "mean_val_fraction": 0.1953
+    }
+  ]
+}
